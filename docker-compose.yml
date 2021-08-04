@@ -1,12 +1,16 @@
 version: '3.8'
 services:
-    frontend:
-      container_name: frontend
-      build: ./frontend
+    web:
+      container_name: fusion-react-ui
+      build:
+        context: .
+        target: dev
+      environmemt:
+        CHOKIDAR_USEPOLLING: "true"
       volumes:
         - './:/app'
         - '/app/node_modules'
+      stdin_open: true
+      command: yarn start
       ports:
         - 3000:3000
-      stdin_open: true
-      command: npm start
