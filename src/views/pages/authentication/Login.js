@@ -12,6 +12,7 @@ import { Link, useHistory } from 'react-router-dom'
 import InputPasswordToggle from '@components/input-password-toggle'
 import { getHomeRouteForLoggedInUser, isObjEmpty } from '@utils'
 import { Facebook, Twitter, Mail, GitHub, HelpCircle, Coffee } from 'react-feather'
+import { loginService } from '../../../fusionapis/login.service'
 import {
   Alert,
   Row,
@@ -57,19 +58,22 @@ const Login = props => {
 
   const onSubmit = data => {
     if (isObjEmpty(errors)) {
-      useJwt
-        .login({ email, password })
-        .then(res => {
-          const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
-          dispatch(handleLogin(data))
-          ability.update(res.data.userData.ability)
-          history.push(getHomeRouteForLoggedInUser(data.role))
-          toast.success(
-            <ToastContent name={data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
-            { transition: Slide, hideProgressBar: true, autoClose: 2000 }
-          )
-        })
-        .catch(err => console.log(err))
+      // useJwt
+      //   .login({ email, password })
+      //   .then(res => {
+      //     const data = { ...res.data.userData, accessToken: res.data.accessToken, refreshToken: res.data.refreshToken }
+      //     dispatch(handleLogin(data))
+      //     ability.update(res.data.userData.ability)
+      //     history.push(getHomeRouteForLoggedInUser(data.role))
+      //     toast.success(
+      //       <ToastContent name={data.fullName || data.username || 'John Doe'} role={data.role || 'admin'} />,
+      //       { transition: Slide, hideProgressBar: true, autoClose: 2000 }
+      //     )
+      //   })
+      //   .catch(err => console.log(err))
+
+      loginService.userlogin(email, password)
+
     }
   }
 
@@ -135,32 +139,9 @@ const Login = props => {
         <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
           <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
             <CardTitle tag='h2' className='font-weight-bold mb-1'>
-              Welcome to Vuexy! 👋
+              FusionAI
             </CardTitle>
-            <CardText className='mb-2'>Please sign-in to your account and start the adventure</CardText>
-            <Alert color='primary'>
-              <div className='alert-body font-small-2'>
-                <p>
-                  <small className='mr-50'>
-                    <span className='font-weight-bold'>Admin:</span> admin@demo.com | admin
-                  </small>
-                </p>
-                <p>
-                  <small className='mr-50'>
-                    <span className='font-weight-bold'>Client:</span> client@demo.com | client
-                  </small>
-                </p>
-              </div>
-              <HelpCircle
-                id='login-tip'
-                className='position-absolute'
-                size={18}
-                style={{ top: '10px', right: '10px' }}
-              />
-              <UncontrolledTooltip target='login-tip' placement='left'>
-                This is just for ACL demo purpose.
-              </UncontrolledTooltip>
-            </Alert>
+            <CardText className='mb-2'>Sign-in to access FusionAI</CardText>
             <Form className='auth-login-form mt-2' onSubmit={handleSubmit(onSubmit)}>
               <FormGroup>
                 <Label className='form-label' for='login-email'>
@@ -172,7 +153,7 @@ const Login = props => {
                   value={email}
                   id='login-email'
                   name='login-email'
-                  placeholder='john@example.com'
+                  placeholder='firstname.lastname@infosight.co.ke'
                   onChange={e => setEmail(e.target.value)}
                   className={classnames({ 'is-invalid': errors['login-email'] })}
                   innerRef={register({ required: true, validate: value => value !== '' })}
@@ -204,29 +185,6 @@ const Login = props => {
                 Sign in
               </Button.Ripple>
             </Form>
-            <p className='text-center mt-2'>
-              <span className='mr-25'>New on our platform?</span>
-              <Link to='/register'>
-                <span>Create an account</span>
-              </Link>
-            </p>
-            <div className='divider my-2'>
-              <div className='divider-text'>or</div>
-            </div>
-            <div className='auth-footer-btn d-flex justify-content-center'>
-              <Button.Ripple color='facebook'>
-                <Facebook size={14} />
-              </Button.Ripple>
-              <Button.Ripple color='twitter'>
-                <Twitter size={14} />
-              </Button.Ripple>
-              <Button.Ripple color='google'>
-                <Mail size={14} />
-              </Button.Ripple>
-              <Button.Ripple className='mr-0' color='github'>
-                <GitHub size={14} />
-              </Button.Ripple>
-            </div>
           </Col>
         </Col>
       </Row>
