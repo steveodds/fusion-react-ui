@@ -30,7 +30,7 @@ import {
 
 import '@styles/base/pages/page-auth.scss'
 
-const ToastContent = ({ name, role }) => (
+const ToastContent = ({ name }) => (
   <Fragment>
     <div className='toastify-header'>
       <div className='title-wrapper'>
@@ -39,7 +39,7 @@ const ToastContent = ({ name, role }) => (
       </div>
     </div>
     <div className='toastify-body'>
-      <span>You have successfully logged in as an {role} user to Vuexy. Now you can start to explore. Enjoy!</span>
+      <span>You have successfully logged in to FusionAI.</span>
     </div>
   </Fragment>
 )
@@ -53,8 +53,7 @@ const Login = props => {
   const [password, setPassword] = useState('admin')
 
   const { register, errors, handleSubmit } = useForm()
-  const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
-    source = require(`@src/assets/images/pages/${illustration}`).default
+  const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg', source = require(`@src/assets/images/pages/${illustration}`).default
 
   const onSubmit = data => {
     if (isObjEmpty(errors)) {
@@ -72,8 +71,30 @@ const Login = props => {
       //   })
       //   .catch(err => console.log(err))
 
-      loginService.userlogin(email, password)
 
+      loginService.userlogin(email, password)
+        .then(function (response) {
+          if (!response.result) {
+            toast.error('Please check your username/password.', {
+              position: "top-right",
+              autoClose: false,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined
+            })
+          } else {
+            const setAbility = new Array({ action: "manage", subject: "all" })
+            const data = { ...{ id: 1, fullName: email, username: email, role: "admin", ability: setAbility }, accessToken: response.access_token, refreshToken: null }
+            dispatch(handleLogin(data))
+            ability.update(setAbility)
+            history.push('/dashboard/ecommerce/'.concat(response.access_token))
+            toast.success(
+              <ToastContent name={email} role={data.role || 'admin'} />
+            )
+          }
+        })
     }
   }
 
@@ -181,10 +202,14 @@ const Login = props => {
               <FormGroup>
                 <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
               </FormGroup>
+              {/* <Alert color='warning'>
+                <h4 className='alert-heading'>Lorem ipsum dolor sit amet</h4>
+              </Alert> */}
               <Button.Ripple type='submit' color='primary' block>
                 Sign in
               </Button.Ripple>
             </Form>
+
           </Col>
         </Col>
       </Row>
