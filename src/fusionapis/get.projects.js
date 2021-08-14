@@ -2,15 +2,17 @@ function getAllUserProjects(token) {
   const requestOptions = {
     method: "GET",
     headers: {
-      accept: "application/json"
+      accept: "application/json",
+      Authorization: "Bearer ".concat(token.token)
     }
   }
 
-  return fetch("https://trial.infosight.io/webapi/version", requestOptions)
+  return fetch("https://trial.infosight.io/webapi/v1/projects/crud/read-all", requestOptions)
     .then(response => response.json())
+    .catch(error => console.error(error))
 }
 
-function getVersion(token) {
+function getVersion() {
   const requestOptions = {
     method: "GET",
     headers: {
