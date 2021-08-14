@@ -52,7 +52,7 @@ const EcommerceDashboard = (props) => {
         </Col>
       </Row> */}
       <Row className='match-height'>
-        <Col lg='8' xs='12'>
+        <Col>
           <ProjectTable token={token} />
         </Col>
         {/* <Col lg='4' md='6' xs='12'>
