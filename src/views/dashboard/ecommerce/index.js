@@ -12,17 +12,20 @@ import OrdersBarChart from '@src/views/ui-elements/cards/statistics/OrdersBarCha
 import ProfitLineChart from '@src/views/ui-elements/cards/statistics/ProfitLineChart'
 import CardTransactions from '@src/views/ui-elements/cards/advance/CardTransactions'
 import CardBrowserStates from '@src/views/ui-elements/cards/advance/CardBrowserState'
+import { getProjects } from '../../../fusionapis/get.projects'
 
 import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
+import ProjectTable from './ProjectTable'
 
-const EcommerceDashboard = () => {
+const EcommerceDashboard = (props) => {
   const { colors } = useContext(ThemeColors),
     trackBgColor = '#e9ecef'
 
+  const token = props.match.params.token
   return (
     <div id='dashboard-ecommerce'>
-      <Row className='match-height'>
+      {/* <Row className='match-height'>
         <Col xl='4' md='6' xs='12'>
           <CardMedal />
         </Col>
@@ -47,12 +50,12 @@ const EcommerceDashboard = () => {
         <Col lg='8' md='12'>
           <RevenueReport primary={colors.primary.main} warning={colors.warning.main} />
         </Col>
-      </Row>
+      </Row> */}
       <Row className='match-height'>
         <Col lg='8' xs='12'>
-          <CompanyTable />
+          <ProjectTable token={token} />
         </Col>
-        <Col lg='4' md='6' xs='12'>
+        {/* <Col lg='4' md='6' xs='12'>
           <CardMeetup />
         </Col>
         <Col lg='4' md='6' xs='12'>
@@ -63,7 +66,7 @@ const EcommerceDashboard = () => {
         </Col>
         <Col lg='4' md='6' xs='12'>
           <CardTransactions />
-        </Col>
+        </Col> */}
       </Row>
     </div>
   )
