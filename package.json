@@ -116,6 +116,6 @@
     "not dead",
     "not op_mini all"
   ],
-  
-  "homepage": ""
+  "homepage": "",
+  "proxy": "https://trial.infosight.io/"
 }
