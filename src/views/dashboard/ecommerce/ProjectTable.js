@@ -47,31 +47,17 @@ const ProjectTable = (token) => {
 
   const renderData = () => {
     return data.map(col => {
-      const IconTag = Math.random() < 0.5 ? (
-        <TrendingUp size={15} className='text-success' />
-      ) : (
-        <TrendingDown size={15} className='text-danger' />
-      )
-
       if (col.hasOwnProperty('id')) {
         return (
           <tr key={col.project_name}>
             <td>
-              <div className='d-flex align-items-center'>
-                <div className='avatar rounded'>
-                  <div className='avatar-content'>
-                    <img src={col.img} alt={col.name} />
-                  </div>
-                </div>
-                <div>
-                  <div className='font-weight-bolder'>{col.project_name}</div>
-                  <div className='font-small-2 text-muted'>FusionAdmin@gmail.com</div>
-                </div>
+              <div>
+                <div className='font-weight-bolder'>{col.project_name}</div>
+                <div className='font-small-2 text-muted'>FusionAdmin@gmail.com</div>
               </div>
             </td>
             <td>
-              <div className='d-flex align-items-center'>
-                <Avatar className='mr-1' color={colorsArr[col.project_type]} icon={col.icon} />
+              <div>
                 <span>{col.project_description}</span>
               </div>
             </td>
@@ -81,11 +67,9 @@ const ProjectTable = (token) => {
                 <span className='font-small-2 text-muted'>{col.date_created}</span>
               </div>
             </td>
-            {/* <td>{col.revenue}</td> */}
             <td>
-              <div className='d-flex align-items-center'>
+              <div>
                 <span className='font-weight-bolder mr-1'>{col.id}%</span>
-                {IconTag}
               </div>
             </td>
           </tr>
@@ -99,13 +83,12 @@ const ProjectTable = (token) => {
       <Table responsive>
         <thead>
           <div>
-            Current version {version}
+            <span className='text-muted'>Current version {version}</span>
           </div>
           <tr>
             <th>Name</th>
             <th>Description</th>
             <th>Created</th>
-            {/* <th>Date</th> */}
             <th>ID</th>
           </tr>
         </thead>
