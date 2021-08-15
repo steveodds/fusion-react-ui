@@ -26,8 +26,7 @@ const ProjectTable = (token) => {
   useEffect(() => getProjects.getAllUserProjects(token)
     .then(result => setProjects(result)), [])
 
-  let colorsArr = {}
-  const tempArray = projects.map(projectObject => (
+  const data = projects.map(projectObject => (
     {
       project_name: projectObject.project_name,
       project_description: projectObject.project_description,
@@ -36,14 +35,6 @@ const ProjectTable = (token) => {
       date_created: projectObject.date_created
     }
   ))
-  const data = [
-    ...tempArray,
-    colorsArr = {
-      DOC: 'light-primary',
-      OCR: 'light-success',
-      CHAT: 'light-warning'
-    }
-  ]
 
   const renderData = () => {
     return data.map(col => {
@@ -53,7 +44,6 @@ const ProjectTable = (token) => {
             <td>
               <div>
                 <div className='font-weight-bolder'>{col.project_name}</div>
-                <div className='font-small-2 text-muted'>FusionAdmin@gmail.com</div>
               </div>
             </td>
             <td>
@@ -83,7 +73,7 @@ const ProjectTable = (token) => {
       <Table responsive>
         <thead>
           <div>
-            <span className='text-muted'>Current version {version}</span>
+            <span className='text-muted px-2 font-small-2'>Current version {version}</span>
           </div>
           <tr>
             <th>Name</th>
