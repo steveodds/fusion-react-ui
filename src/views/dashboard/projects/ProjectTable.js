@@ -59,7 +59,7 @@ const ProjectTable = (token) => {
             </td>
             <td>
               <div>
-                <span className='font-weight-bolder mr-1'>{col.id}%</span>
+                <span className='font-weight-bolder mr-1'>{col.id}</span>
               </div>
             </td>
           </tr>

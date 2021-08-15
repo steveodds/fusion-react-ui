@@ -16,7 +16,7 @@ import { getProjects } from '../../../fusionapis/get.projects'
 
 import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
-import ProjectTable from './ProjectTable'
+import ProjectTable from '../projects/ProjectTable'
 
 const EcommerceDashboard = (props) => {
   const { colors } = useContext(ThemeColors),
