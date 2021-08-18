@@ -1,6 +1,9 @@
 // !Do not remove the Layout import
 import Layout from '@layouts/VerticalLayout'
 
-const VerticalLayout = props => <Layout {...props}>{props.children}</Layout>
+// import ThemeNavbar from '../views/components/CustomNavbar'
+import NavbarComponent from '../views/components/CustomNavbar'
+
+const VerticalLayout = props => <Layout navbar={props => <NavbarComponent {...props} />} {...props}> {props.children} </Layout>
 
 export default VerticalLayout
