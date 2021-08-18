@@ -24,7 +24,8 @@ const ProjectTable = (token) => {
   }, [])
 
   useEffect(() => getProjects.getAllUserProjects(token)
-    .then(result => setProjects(result)), [])
+    .then(result => setProjects(result)
+    ), [])
 
   const data = projects.map(projectObject => (
     {
