@@ -49,8 +49,8 @@ const Login = props => {
   const ability = useContext(AbilityContext)
   const dispatch = useDispatch()
   const history = useHistory()
-  const [email, setEmail] = useState('admin@demo.com')
-  const [password, setPassword] = useState('admin')
+  const [email, setEmail] = useState(null)
+  const [password, setPassword] = useState(null)
 
   const { register, errors, handleSubmit } = useForm()
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg', source = require(`@src/assets/images/pages/${illustration}`).default
