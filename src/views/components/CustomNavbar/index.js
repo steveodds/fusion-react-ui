@@ -1,13 +1,21 @@
+// ** React Imports
+import { Fragment } from 'react'
+
 // ** Custom Components
-import NavbarUser from './CustomNavbarUser'
+import CustomNavbarUser from './CustomNavbarUser'
+import NavbarBookmarks from '@layouts/components/navbar/NavbarBookmarks'
 
 const ThemeNavbar = props => {
   // ** Props
-  const { skin, setSkin } = props
+  const { skin, setSkin, setMenuVisibility } = props
 
   return (
-    <NavbarUser skin={skin} setSkin={setSkin} />
-    // <h6>I am in navbar, Everything else is removed</h6>
+    <Fragment>
+      <div className='bookmark-wrapper d-flex align-items-center'>
+        <NavbarBookmarks setMenuVisibility={setMenuVisibility} />
+      </div>
+      <CustomNavbarUser skin={skin} setSkin={setSkin} />
+    </Fragment>
   )
 }
 
