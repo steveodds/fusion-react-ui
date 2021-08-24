@@ -17,7 +17,7 @@ import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from
 import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircle, Power } from 'react-feather'
 
 // ** Default Avatar Image
-import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
+import defaultAvatar from '@src/assets/images/avatars/avatar-blank.png'
 
 const UserDropdown = () => {
     // ** Store Vars
@@ -30,6 +30,7 @@ const UserDropdown = () => {
     useEffect(() => {
         if (isUserLoggedIn() !== null) {
             setUserData(JSON.parse(localStorage.getItem('userData')))
+            console.log(userData)
         }
     }, [])
 
@@ -50,31 +51,11 @@ const UserDropdown = () => {
                     <User size={14} className='mr-75' />
                     <span className='align-middle'>Profile</span>
                 </DropdownItem>
-                <DropdownItem tag={Link} to='/apps/email'>
-                    <Mail size={14} className='mr-75' />
-                    <span className='align-middle'>Inbox</span>
-                </DropdownItem>
-                <DropdownItem tag={Link} to='/apps/todo'>
-                    <CheckSquare size={14} className='mr-75' />
-                    <span className='align-middle'>Tasks</span>
-                </DropdownItem>
-                <DropdownItem tag={Link} to='/apps/chat'>
-                    <MessageSquare size={14} className='mr-75' />
-                    <span className='align-middle'>Chats</span>
-                </DropdownItem>
-                <DropdownItem divider />
                 <DropdownItem tag={Link} to='/pages/account-settings'>
                     <Settings size={14} className='mr-75' />
                     <span className='align-middle'>Settings</span>
                 </DropdownItem>
-                <DropdownItem tag={Link} to='/pages/pricing'>
-                    <CreditCard size={14} className='mr-75' />
-                    <span className='align-middle'>Pricing</span>
-                </DropdownItem>
-                <DropdownItem tag={Link} to='/pages/faq'>
-                    <HelpCircle size={14} className='mr-75' />
-                    <span className='align-middle'>FAQ</span>
-                </DropdownItem>
+                <DropdownItem divider />
                 <DropdownItem tag={Link} to='/login' onClick={() => dispatch(handleLogout())}>
                     <Power size={14} className='mr-75' />
                     <span className='align-middle'>Logout</span>
