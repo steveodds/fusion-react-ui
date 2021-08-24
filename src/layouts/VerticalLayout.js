@@ -6,6 +6,6 @@ import CustomFooter from '../views/components/CustomFooter/Footer'
 // import CustomNavbar from '../views/components/CustomNavbar/Navbar'
 
 // const VerticalLayout = props => <Layout {...props}> {props.children} </Layout>
-const VerticalLayout = props => <Layout navbar={<ThemeNavbar />} footer={<CustomFooter />} {...props}> </Layout>
+const VerticalLayout = props => <Layout navbar={<ThemeNavbar />} footer={<CustomFooter />} {...props}> {props.children} </Layout>
 
 export default VerticalLayout
