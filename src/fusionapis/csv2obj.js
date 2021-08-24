@@ -23,8 +23,7 @@ function csv2obj(str, delimiter = "\t") {
         }, {})
         return el
     })
-
-    arr.sort(function (a, b) { return a.Count + b.Count })
+    arr.sort(function (a, b) { return b.Count - a.Count })
     // return the array
     return arr
 }
