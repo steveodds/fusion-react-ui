@@ -13,7 +13,6 @@ function generatePercentages(countData) {
     for (const i in countData) {
         countData[i] = (countData[i] / total * 100).toFixed(2)
     }
-    console.log(countData)
     return countData
 }
 
