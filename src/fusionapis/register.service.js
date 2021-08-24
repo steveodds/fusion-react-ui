@@ -3,7 +3,7 @@ async function userRegistration(firstname, lastname, email, password, organisati
     const requestOptions = {
         method: 'POST',
         headers: { 
-            'accept':'application/json',
+            accept:'application/json',
             'Content-Type': 'application/x-www-form-urlencoded' 
         },
         body: new URLSearchParams({

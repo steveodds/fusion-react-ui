@@ -71,7 +71,7 @@ const Register = () => {
       //   })
       //   .catch(err => console.log(err))
       registerService.userRegistration(firstname, lastname, email, password, orgid)
-      .then( function (response) {
+        .then(function (response) {
           if (!response.result) {
             toast.error('Could not register. Please try again.', {
               position: "top-right",
@@ -87,7 +87,7 @@ const Register = () => {
             history.push('') //TODO Redirect to email confirmation page
           }
         }
-      )
+        )
 
     }
   }
@@ -146,7 +146,7 @@ const Register = () => {
                 <Input
                   autoFocus
                   type='text'
-                  value={username}
+                  value={firstname}
                   placeholder='John'
                   id='register-username'
                   name='register-username'
@@ -165,7 +165,7 @@ const Register = () => {
                 <Input
                   autoFocus
                   type='text'
-                  value={username}
+                  value={lastname}
                   placeholder='Doe'
                   id='register-lastname'
                   name='register-lastname'
