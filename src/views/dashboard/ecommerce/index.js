@@ -18,6 +18,7 @@ import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
 import ProjectTable from '../fusion_components/ProjectTable'
 import LicenseChart from '../fusion_components/LicenseChart'
+import LicenseDoghnutChart from '../fusion_components/LicenseDoghnutChart'
 
 const EcommerceDashboard = (props) => {
   const { colors } = useContext(ThemeColors),
@@ -35,24 +36,6 @@ const EcommerceDashboard = (props) => {
         </Col>
       </Row> */}
       <Row className='match-height'>
-        {/* <Col lg='4' md='12'>
-          <Row className='match-height'>
-            <Col lg='6' md='3' xs='6'>
-              <OrdersBarChart warning={colors.warning.main} />
-            </Col>
-            <Col lg='6' md='3' xs='6'>
-              <ProfitLineChart info={colors.info.main} />
-            </Col>
-            <Col lg='12' md='6' xs='12'>
-              <Earnings success={colors.success.main} />
-            </Col>
-          </Row>
-        </Col> */}
-        <Col>
-          <LicenseChart token={token} primary={colors.primary.main} warning={colors.warning.main} />
-        </Col>
-      </Row>
-      <Row className='match-height'>
         <Col>
           <ProjectTable token={token} />
         </Col>
@@ -68,6 +51,27 @@ const EcommerceDashboard = (props) => {
         <Col lg='4' md='6' xs='12'>
           <CardTransactions />
         </Col> */}
+      </Row>
+      <Row className='match-height'>
+        {/* <Col lg='4' md='12'>
+          <Row className='match-height'>
+            <Col lg='6' md='3' xs='6'>
+              <OrdersBarChart warning={colors.warning.main} />
+            </Col>
+            <Col lg='6' md='3' xs='6'>
+              <ProfitLineChart info={colors.info.main} />
+            </Col>
+            <Col lg='12' md='6' xs='12'>
+              <Earnings success={colors.success.main} />
+            </Col>
+          </Row>
+        </Col> */}
+        <Col lg='8'>
+          <LicenseChart token={token} primary={colors.primary.main} warning={colors.warning.main} />
+        </Col>
+        <Col lg='4'>
+          <LicenseDoghnutChart token={token} />
+        </Col>
       </Row>
     </div>
   )
