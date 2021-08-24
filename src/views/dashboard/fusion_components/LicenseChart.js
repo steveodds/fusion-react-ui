@@ -31,7 +31,7 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
     const options = {
         elements: {
             rectangle: {
-                borderWidth: 2,
+                borderWidth: 3,
                 borderSkipped: 'bottom'
             }
         },
@@ -56,7 +56,7 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
                 {
                     display: true,
                     gridLines: {
-                        display: true,
+                        display: false,
                         color: gridLineColor,
                         zeroLineColor: gridLineColor
                     },
@@ -78,7 +78,7 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
                     ticks: {
                         stepSize: 10,
                         min: 0,
-                        max: 150,
+                        max: licenseData !== null ? Math.max(...licenseData.map(o => o.Count)) : 100,
                         fontColor: labelColor
                     }
                 }
@@ -90,10 +90,38 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
             datasets: [
                 {
                     data: licenseData !== null ? licenseData.map(license => license.Count) : [],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
                     borderColor: 'transparent',
                     barThickness: 35,
-                    borderColor: 'rgb(75, 192, 192)'
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)',
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)'
+                      ]
                 }
             ]
         }
