@@ -7,7 +7,7 @@ const DashboardRoutes = [
     component: lazy(() => import('../../views/dashboard/analytics'))
   },
   {
-    path: '/dashboard/ecommerce/:token',
+    path: '/dashboard/ecommerce/',
     component: lazy(() => import('../../views/dashboard/ecommerce')),
     exact: true
   }
