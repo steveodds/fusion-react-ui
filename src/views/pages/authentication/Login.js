@@ -29,6 +29,7 @@ import {
 } from 'reactstrap'
 
 import '@styles/base/pages/page-auth.scss'
+const jwt = require('jsonwebtoken')
 
 const ToastContent = ({ name }) => (
   <Fragment>
@@ -89,7 +90,12 @@ const Login = props => {
             const data = { ...{ id: 1, fullName: email, username: email, role: "admin", ability: setAbility }, accessToken: response.access_token, refreshToken: null }
             dispatch(handleLogin(data))
             ability.update(setAbility)
-            history.push('/dashboard/ecommerce/'.concat(response.access_token))
+            const decoded = jwt.decode(response.access_token)
+            const expiry = decoded.exp
+            const d = new Date()
+            d.setTime(parseInt("".concat(expiry).concat("000")))
+            document.cookie = "fusion=".concat(response.access_token).concat("; expires=").concat(d.toUTCString())
+            history.push('/dashboard/ecommerce/')
             toast.success(
               <ToastContent name={email} role={data.role || 'admin'} />
             )
@@ -162,7 +168,7 @@ const Login = props => {
               </Button.Ripple>
               <FormGroup>
                 <div>
-                <Link to='/Register'>
+                  <Link to='/Register'>
                     <small>Create new account.</small>
                   </Link>
                 </div>
