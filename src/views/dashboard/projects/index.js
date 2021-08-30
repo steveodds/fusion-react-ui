@@ -3,7 +3,6 @@ import { Row, Col } from 'reactstrap'
 
 import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
-import ProjectsList from './projectlist'
 import ProjectTable from '../fusion_components/ProjectTable'
 
 const Projects = () => {
