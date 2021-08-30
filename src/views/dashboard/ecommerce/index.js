@@ -18,13 +18,17 @@ import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
 import ProjectTable from '../fusion_components/ProjectTable'
 import LicenseChart from '../fusion_components/LicenseChart'
+import LicensePieChart from '../fusion_components/LicensePieChart'
 import LicenseDoghnutChart from '../fusion_components/LicenseDoghnutChart'
 
-const EcommerceDashboard = (props) => {
+const EcommerceDashboard = () => {
   const { colors } = useContext(ThemeColors),
     trackBgColor = '#e9ecef'
 
-  const token = props.match.params.token
+  let token = ""
+  if (document.cookie) {
+    token = document.cookie.split('; ').find(row => row.startsWith('fusion=')).split('=')[1]
+  }
   return (
     <div id='dashboard-ecommerce'>
       {/* <Row className='match-height'>
@@ -36,9 +40,9 @@ const EcommerceDashboard = (props) => {
         </Col>
       </Row> */}
       <Row className='match-height'>
-        <Col>
+        {/* <Col>
           <ProjectTable token={token} />
-        </Col>
+        </Col> */}
         {/* <Col lg='4' md='6' xs='12'>
           <CardMeetup />
         </Col>
@@ -68,6 +72,7 @@ const EcommerceDashboard = (props) => {
         </Col> */}
         <Col lg='8'>
           <LicenseChart token={token} primary={colors.primary.main} warning={colors.warning.main} />
+          {/* <LicensePieChart /> */}
         </Col>
         <Col lg='4'>
           <LicenseDoghnutChart token={token} />
