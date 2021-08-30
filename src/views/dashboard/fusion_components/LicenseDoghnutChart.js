@@ -8,7 +8,9 @@ import { csvToObjectConverter } from '../../../fusionapis/csv2obj'
 function generatePercentages(countData) {
     let total = 0
     for (const i in countData) {
-        total += parseInt(countData[i], 10)
+        if (i !== "undefined") {
+            total += parseInt(countData[i], 10)
+        }
     }
     for (const i in countData) {
         countData[i] = (countData[i] / total * 100).toFixed(2)
