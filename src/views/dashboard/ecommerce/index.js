@@ -20,6 +20,7 @@ import ProjectTable from '../fusion_components/ProjectTable'
 import LicenseChart from '../fusion_components/LicenseChart'
 import LicensePieChart from '../fusion_components/LicensePieChart'
 import LicenseDoghnutChart from '../fusion_components/LicenseDoghnutChart'
+import UserLicense from './dashboard_components/UserLicense'
 
 const EcommerceDashboard = () => {
   const { colors } = useContext(ThemeColors),
@@ -31,14 +32,15 @@ const EcommerceDashboard = () => {
   }
   return (
     <div id='dashboard-ecommerce'>
-      {/* <Row className='match-height'>
+      <Row className='match-height'>
         <Col xl='4' md='6' xs='12'>
-          <CardMedal />
+          {/* <CardMedal /> */}
+          <UserLicense token={token} />
         </Col>
         <Col xl='8' md='6' xs='12'>
           <StatsCard cols={{ xl: '3', sm: '6' }} />
         </Col>
-      </Row> */}
+      </Row>
       <Row className='match-height'>
         {/* <Col>
           <ProjectTable token={token} />
