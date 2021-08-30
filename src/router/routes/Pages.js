@@ -11,6 +11,11 @@ const PagesRoutes = [
     }
   },
   {
+    path: '/projects',
+    component: lazy(() => import('../../views/dashboard/projects')),
+    exact: true
+  },
+  {
     path: '/pages/login-v1',
     component: lazy(() => import('../../views/pages/authentication/LoginV1')),
     layout: 'BlankLayout'
