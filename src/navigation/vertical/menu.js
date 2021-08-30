@@ -19,13 +19,13 @@ export default [
                 id: 'createnew',
                 title: 'Create New',
                 icon: <ChevronRight size={15} />,
-                navLink: '/charts/apex'
+                navLink: '#'
             },
             {
                 id: 'listprojects',
                 title: 'List Projects',
                 icon: <ChevronRight size={15} />,
-                navLink: '/charts/chartjs'
+                navLink: '/projects'
             }
         ]
     },
