@@ -1,5 +1,5 @@
 // ** React Imports
-import { Suspense, useContext, lazy } from 'react'
+import { Suspense, useEffect, useContext, lazy } from 'react'
 
 // ** Utils
 import { isUserLoggedIn } from '@utils'
@@ -21,6 +21,7 @@ import { DefaultRoute, Routes } from './routes'
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
+const jwt = require('jsonwebtoken')
 
 const Router = () => {
   // ** Hooks
@@ -69,6 +70,28 @@ const Router = () => {
     const route = props.route
     let action, resource
 
+    let expired = true
+    if (route.path === "/login") {
+      expired = false
+    }
+    let token = ''
+    // useEffect(() => {
+    if (document.cookie) {
+      token = document.cookie.split('; ').find(row => row.startsWith('fusion=')).split('=')[1]
+      const decoded = jwt.decode(token)
+      const expiry = decoded.exp
+      const d = new Date()
+      d.setTime(parseInt("".concat(expiry).concat("000")))
+      const currDate = new Date()
+      if (currDate.getTime() >= d.getTime()) {
+        expired = true
+      } else {
+        expired = false
+      }
+    } else {
+      expired = true
+    }
+    // }, [])
     // ** Assign vars based on route meta
     if (route.meta) {
       action = route.meta.action ? route.meta.action : null
@@ -77,7 +100,7 @@ const Router = () => {
 
     if (
       (!isUserLoggedIn() && route.meta === undefined) ||
-      (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)
+      (!isUserLoggedIn() && route.meta && !route.meta.authRoute && !route.meta.publicRoute)/* || (expired)*/
     ) {
       /**
        ** If user is not Logged in & route meta is undefined
@@ -85,7 +108,6 @@ const Router = () => {
        ** If user is not Logged in & route.meta.authRoute, !route.meta.publicRoute are undefined
        ** Then redirect user to login
        */
-
       return <Redirect to='/login' />
     } else if (route.meta && route.meta.authRoute && isUserLoggedIn()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
@@ -153,20 +175,20 @@ const Router = () => {
                             /*eslint-disable */
                             {...(route.appLayout
                               ? {
-                                  appLayout: route.appLayout
-                                }
+                                appLayout: route.appLayout
+                              }
                               : {})}
                             {...(route.meta
                               ? {
-                                  routeMeta: route.meta
-                                }
+                                routeMeta: route.meta
+                              }
                               : {})}
                             {...(route.className
                               ? {
-                                  wrapperClass: route.className
-                                }
+                                wrapperClass: route.className
+                              }
                               : {})}
-                            /*eslint-enable */
+                          /*eslint-enable */
                           >
                             <FinalRoute route={route} {...props} />
                           </LayoutWrapper>
