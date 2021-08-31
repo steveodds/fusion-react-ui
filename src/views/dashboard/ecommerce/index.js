@@ -21,6 +21,7 @@ import LicenseChart from '../fusion_components/LicenseChart'
 import LicensePieChart from '../fusion_components/LicensePieChart'
 import LicenseDoghnutChart from '../fusion_components/LicenseDoghnutChart'
 import UserLicense from './dashboard_components/UserLicense'
+import UserProjects from './dashboard_components/UserProjects'
 
 const EcommerceDashboard = () => {
   const { colors } = useContext(ThemeColors),
@@ -38,40 +39,10 @@ const EcommerceDashboard = () => {
           <UserLicense token={token} />
         </Col>
         <Col xl='8' md='6' xs='12'>
-          <StatsCard cols={{ xl: '3', sm: '6' }} />
+          <UserProjects token={token} />
         </Col>
       </Row>
       <Row className='match-height'>
-        {/* <Col>
-          <ProjectTable token={token} />
-        </Col> */}
-        {/* <Col lg='4' md='6' xs='12'>
-          <CardMeetup />
-        </Col>
-        <Col lg='4' md='6' xs='12'>
-          <CardBrowserStates colors={colors} trackBgColor={trackBgColor} />
-        </Col>
-        <Col lg='4' md='6' xs='12'>
-          <GoalOverview success={colors.success.main} />
-        </Col>
-        <Col lg='4' md='6' xs='12'>
-          <CardTransactions />
-        </Col> */}
-      </Row>
-      <Row className='match-height'>
-        {/* <Col lg='4' md='12'>
-          <Row className='match-height'>
-            <Col lg='6' md='3' xs='6'>
-              <OrdersBarChart warning={colors.warning.main} />
-            </Col>
-            <Col lg='6' md='3' xs='6'>
-              <ProfitLineChart info={colors.info.main} />
-            </Col>
-            <Col lg='12' md='6' xs='12'>
-              <Earnings success={colors.success.main} />
-            </Col>
-          </Row>
-        </Col> */}
         <Col lg='8'>
           <LicenseChart token={token} primary={colors.primary.main} warning={colors.warning.main} />
           {/* <LicensePieChart /> */}
