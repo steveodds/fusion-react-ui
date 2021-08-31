@@ -24,7 +24,7 @@ const ProjectTable = (token) => {
 
   useEffect(() => getProjects.getAllUserProjects(token)
     .then(function (result) {
-      if (result !== undefined && result[0].hasOwnProperty('org_id')) {
+      if (result && result[0].hasOwnProperty('org_id')) {
         setProjects(result)
       } else {
         setProjects(
