@@ -3,16 +3,48 @@ import { getLicenseData } from '../../../fusionapis/license.usage'
 import { csvToObjectConverter } from '../../../fusionapis/csv2obj'
 import { Bar } from 'react-chartjs-2'
 import { Card, CardHeader, CardTitle, CardBody } from 'reactstrap'
+import Flatpickr from 'react-flatpickr'
+import { Calendar } from 'react-feather'
+
+function MergeByDate(licenseData) {
+    const dates = [...new Set(licenseData.map(a => a.Date))]
+    dates.sort(function (a, b) {
+        a = a.split('/').reverse().join('')
+        b = b.split('/').reverse().join('')
+        return a > b ? 1 : a < b ? -1 : 0
+    })
+    const finalData = {}
+    licenseData.forEach(date => {
+        if (!finalData[date.Date]) {
+            finalData[date.Date] = []
+        }
+        finalData[date.Date].push(date)
+    })
+
+    return { dates: { ...dates }, final_data: { ...finalData } }
+}
 
 const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorShade, token }) => {
     const [licenseData, setLicenseData] = useState(null)
+    const [activeData, setActiveData] = useState(null)
+    const [activeDate, setActiveDate] = useState(null)
+    const [dates, setDates] = useState(null)
+    const [processedData, setProcessedData] = useState(null)
 
     useEffect(() => {
         getLicenseData.getLicenseUsage(token)
-            .then(result => setLicenseData(csvToObjectConverter(result)))
+            .then(result => {
+                setLicenseData(csvToObjectConverter(result))
+                const finalData = MergeByDate(csvToObjectConverter(result))
+                setProcessedData(finalData.final_data)
+                setDates(finalData.dates)
+                setActiveDate(finalData.dates[0])
+                setActiveData(finalData.final_data[finalData.dates[0]])
+            })
             .catch(error => console.log(error))
     }, [])
 
+    console.log(licenseData)
     const readableNames = {
         'projects/crud/delete': "Deleted Projects",
         getTokens: "Tokens",
@@ -26,7 +58,8 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
         'projects/crud/read-all': "Read Projects",
         'license/usage': "License",
         'projects/crud/update': "Updated Projects",
-        readlicence: "License Reads"
+        readlicence: "License Reads",
+        undefined: "Others"
     }
     const options = {
         elements: {
@@ -78,7 +111,7 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
                     ticks: {
                         stepSize: 10,
                         min: 0,
-                        max: licenseData !== null ? Math.max(...licenseData.map(o => o.Count)) : 100,
+                        max: activeData ? Math.max(...activeData.map(o => o.Count)) : 100,
                         fontColor: labelColor
                     }
                 }
@@ -86,10 +119,10 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
         }
     },
         data = {
-            labels: licenseData !== null ? licenseData.map(license => readableNames[license.Endpoint]) : [],
+            labels: activeData !== null ? activeData.map(license => readableNames[license.Endpoint]) : [],
             datasets: [
                 {
-                    data: licenseData !== null ? licenseData.map(license => license.Count) : [],
+                    data: activeData !== null ? activeData.map(license => license.Count) : [],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(255, 159, 64, 0.2)',
@@ -105,7 +138,7 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
                         'rgba(54, 162, 235, 0.2)',
                         'rgba(153, 102, 255, 0.2)'
                     ],
-                    borderColor: 'transparent',
+                    // borderColor: 'transparent',
                     barThickness: 35,
                     borderColor: [
                         'rgb(255, 99, 132)',
@@ -121,7 +154,7 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
                         'rgb(75, 192, 192)',
                         'rgb(54, 162, 235)',
                         'rgb(153, 102, 255)'
-                      ]
+                    ]
                 }
             ]
         }
@@ -130,13 +163,32 @@ const LicenseChart = ({ tooltipShadow, gridLineColor, labelColor, successColorSh
         <Card>
             <CardHeader className='d-flex justify-content-between align-items-sm-center align-items-start flex-sm-row flex-column'>
                 <CardTitle tag='h4'>License Usage</CardTitle>
+                <div className='d-flex align-items-center'>
+                    <Calendar size={14} />
+                    <Flatpickr
+                        options={{
+                            mode: 'single',
+                            dateFormat: 'Y-m-d',
+                            enable: dates ? Object.values(dates) : ['2021-01-01', '2021-01-02']
+                        }}
+                        className='form-control flat-picker bg-transparent border-0 shadow-none'
+                        value={activeDate ? activeDate : 'today'}
+                        onChange={([date]) => {
+                            const newDate = date.toISOString().slice(0, 10)
+                            setActiveDate(newDate)
+                            console.log(processedData)
+                            console.log(processedData[newDate])
+                            setActiveData(processedData[newDate] ? processedData[newDate] : null)
+                        }}
+                    />
+                </div>
             </CardHeader>
             <CardBody>
-                <div style={{ height: '500px' }}>
+                <div style={{ height: '400px' }}>
                     <Bar data={data} options={options} height={400} />
                 </div>
             </CardBody>
-        </Card>
+        </Card >
     )
 }
 
