@@ -7,7 +7,24 @@ import useJwt from '@src/@core/auth/jwt/useJwt'
  */
 // eslint-disable-next-line arrow-body-style
 export const isUserLoggedIn = () => {
-  return localStorage.getItem('userData') && localStorage.getItem(useJwt.jwtConfig.storageTokenKeyName)
+  let expired = true
+  let token = ''
+  if (document.cookie) {
+    token = document.cookie.split('; ').find(row => row.startsWith('fusion=')).split('=')[1]
+    const decoded = jwt.decode(token)
+    const expiry = decoded.exp
+    const d = new Date()
+    d.setTime(parseInt("".concat(expiry).concat("000")))
+    const currDate = new Date()
+    if (currDate.getTime() >= d.getTime()) {
+      expired = true
+    } else {
+      expired = false
+    }
+  } else {
+    expired = true
+  }
+  return (localStorage.getItem('userData') && localStorage.getItem(useJwt.jwtConfig.storageTokenKeyName)) && !expired
 }
 
 export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
