@@ -45,12 +45,12 @@ const AccountSettings = () => {
                   <TabPane tabId='3'>
                     <InfoTabContent data={data.info} />
                   </TabPane>
-                  <TabPane tabId='4'>
+                  {/* <TabPane tabId='4'>
                     <SocialTabContent data={data.social} />
                   </TabPane>
                   <TabPane tabId='5'>
                     <NotificationsTabContent data={data.notification} />
-                  </TabPane>
+                  </TabPane> */}
                 </TabContent>
               </CardBody>
             </Card>
