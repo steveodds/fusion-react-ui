@@ -18,7 +18,6 @@ import '@styles/react/libs/charts/apex-charts.scss'
 import '@styles/base/pages/dashboard-ecommerce.scss'
 import ProjectTable from '../fusion_components/ProjectTable'
 import LicenseChart from '../fusion_components/LicenseChart'
-import LicensePieChart from '../fusion_components/LicensePieChart'
 import LicenseDoghnutChart from '../fusion_components/LicenseDoghnutChart'
 import UserLicense from './dashboard_components/UserLicense'
 import UserProjects from './dashboard_components/UserProjects'
@@ -35,7 +34,6 @@ const EcommerceDashboard = () => {
     <div id='dashboard-ecommerce'>
       <Row className='match-height'>
         <Col xl='4' md='6' xs='12'>
-          {/* <CardMedal /> */}
           <UserLicense token={token} />
         </Col>
         <Col xl='8' md='6' xs='12'>
@@ -45,7 +43,6 @@ const EcommerceDashboard = () => {
       <Row className='match-height'>
         <Col lg='8'>
           <LicenseChart token={token} primary={colors.primary.main} warning={colors.warning.main} />
-          {/* <LicensePieChart /> */}
         </Col>
         <Col lg='4'>
           <LicenseDoghnutChart token={token} />
