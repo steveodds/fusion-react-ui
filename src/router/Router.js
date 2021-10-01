@@ -69,29 +69,7 @@ const Router = () => {
   const FinalRoute = props => {
     const route = props.route
     let action, resource
-
-    let expired = true
-    if (route.path === "/login") {
-      expired = false
-    }
-    let token = ''
-    // useEffect(() => {
-    if (document.cookie) {
-      token = document.cookie.split('; ').find(row => row.startsWith('fusion=')).split('=')[1]
-      const decoded = jwt.decode(token)
-      const expiry = decoded.exp
-      const d = new Date()
-      d.setTime(parseInt("".concat(expiry).concat("000")))
-      const currDate = new Date()
-      if (currDate.getTime() >= d.getTime()) {
-        expired = true
-      } else {
-        expired = false
-      }
-    } else {
-      expired = true
-    }
-    // }, [])
+    
     // ** Assign vars based on route meta
     if (route.meta) {
       action = route.meta.action ? route.meta.action : null
