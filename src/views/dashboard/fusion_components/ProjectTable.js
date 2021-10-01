@@ -3,6 +3,7 @@ import { Table, Card, Button } from 'reactstrap'
 import { Monitor, Coffee, Watch, TrendingUp, TrendingDown } from 'react-feather'
 import { getProjects } from '../../../fusionapis/get.projects'
 import { useState, useEffect } from 'react'
+import ButtonGroup from 'reactstrap/lib/ButtonGroup'
 
 const ProjectTable = (token) => {
   const [version, setVersion] = useState("(Loading version information...)")
@@ -75,20 +76,14 @@ const ProjectTable = (token) => {
             </td>
             <td>
               <div>
-                <span className='font-weight-bolder mr-1'>{col.id}</span>
+                <span className='font-small-1'>{col.id}</span>
               </div>
             </td>
-            <td>
+            <td className='text-nowrap'>
               <div>
-                <Button.Ripple outline color='primary' size="sm">
-                  View
-                </Button.Ripple>
-                <Button.Ripple outline color='info' size="sm">
-                  Edit
-                </Button.Ripple>
-                <Button.Ripple outline color='danger' size="sm">
-                  Delete
-                </Button.Ripple>
+                <Button outline color='primary' size="sm">View</Button>{' '}
+                <Button outline color='info' size="sm">Edit</Button>{' '}
+                <Button outline color='danger' size="sm">Delete</Button>
               </div>
             </td>
           </tr>
