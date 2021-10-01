@@ -1,14 +1,44 @@
 import classnames from 'classnames'
 import Avatar from '@components/avatar'
-import { TrendingUp, User, Box, DollarSign, Layers } from 'react-feather'
+import { Archive, Box, DollarSign, Layers, Aperture } from 'react-feather'
 import { Card, CardHeader, CardTitle, CardBody, CardText, Row, Col, Media } from 'reactstrap'
 import { useState, useEffect } from 'react'
 import { getProjects } from '../../../../fusionapis/get.projects'
+import { getLicenseData } from '../../../../fusionapis/license.usage'
+import { csvToObjectConverter } from '../../../../fusionapis/csv2obj'
+
+function TotalDocuments(licenseData) {
+    let finalData = []
+    licenseData.forEach(date => {
+        if (finalData.Count && date.Endpoint === 'extractDocument') {
+            const countVal = parseInt(finalData.Count)
+            finalData.Count = countVal + parseInt(date.Count)
+        } else if (date.Endpoint === 'extractDocument') {
+            finalData = date
+        }
+    })
+
+    return finalData.Count
+}
+
+function TotalTemplates(licenseData) {
+    let finalData = []
+    licenseData.forEach(date => {
+        if (finalData.Count && date.Endpoint === 'templates/crud/create') {
+            const countVal = parseInt(finalData.Count)
+            finalData.Count = countVal + parseInt(date.Count)
+        } else if (date.Endpoint === 'templates/crud/create') {
+            finalData = date
+        }
+    })
+
+    return finalData.Count
+}
 
 const UserProjects = (token) => {
     const [userProjects, setUserProjects] = useState(0)
     const [userDocuments, setUserDocuments] = useState(0)
-    // const [userProjects, setUserProjects] = useState(0)
+    const [totalTemplates, setTotalTemplates] = useState(0)
     // const [userProjects, setUserProjects] = useState(0)
 
     useEffect(() => {
@@ -18,6 +48,18 @@ const UserProjects = (token) => {
                     setUserProjects(0)
                 } else if (result) {
                     setUserProjects(Object.keys(result).length)
+                }
+            })
+    }, [])
+
+    useEffect(() => {
+        getLicenseData.getLicenseUsage(token.token)
+            .then(result => {
+                if (result && result.detail) {
+                    setUserDocuments(0)
+                } else if (result) {
+                    setUserDocuments(TotalDocuments(csvToObjectConverter(result)))
+                    setTotalTemplates(TotalTemplates(csvToObjectConverter(result)))
                 }
             })
     }, [])
@@ -33,20 +75,20 @@ const UserProjects = (token) => {
             title: userDocuments,
             subtitle: 'Extracted Documents',
             color: 'light-info',
-            icon: <User size={24} />
-        }//,
-        // {
-        //     title: '1.423k',
-        //     subtitle: 'Products',
-        //     color: 'light-danger',
-        //     icon: <Box size={24} />
-        // },
-        // {
-        //     title: '$9745',
-        //     subtitle: 'Revenue',
-        //     color: 'light-success',
-        //     icon: <DollarSign size={24} />
-        // }
+            icon: <Aperture size={24} />
+        },
+        {
+            title: userProjects,
+            subtitle: 'Active Templates',
+            color: 'light-danger',
+            icon: <Box size={24} />
+        },
+        {
+            title: totalTemplates,
+            subtitle: 'Total Templates Created',
+            color: 'light-success',
+            icon: <Archive size={24} />
+        }
     ]
 
     const renderData = () => {
