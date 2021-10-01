@@ -6,13 +6,13 @@ import { Button, Media, Label, Row, Col, Input, FormGroup, Alert, Form } from 'r
 const GeneralTabs = ({ data }) => {
   const { register, errors, handleSubmit, control, setValue, trigger } = useForm()
 
-  const [avatar, setAvatar] = useState(data.avatar ? data.avatar : '')
+  const [avatar, setAvatar] = useState(/*data.avatar ? data.avatar : */'')
 
   const onChange = e => {
     const reader = new FileReader(),
       files = e.target.files
     reader.onload = function () {
-      setAvatar(reader.result)
+      // setAvatar(reader.result)
     }
     reader.readAsDataURL(files[0])
   }
